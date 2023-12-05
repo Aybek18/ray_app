@@ -19,6 +19,7 @@ from drf_spectacular.views import SpectacularSwaggerView, SpectacularAPIView
 
 api_urls = [
     path("users/", include("users.urls")),
+    path("bookmarks/", include("bookmarks.urls"))
 ]
 
 docs_urls = [

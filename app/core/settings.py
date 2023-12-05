@@ -38,8 +38,10 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "drf_spectacular",
+    "huey.contrib.djhuey",
     # project apps
     "users",
+    "bookmarks",
 ]
 
 MIDDLEWARE = [
@@ -141,4 +143,47 @@ SPECTACULAR_SETTINGS = {
     "SCHEMA_PATH_PREFIX_TRIM": False,
     "COMPONENT_SPLIT_REQUEST": True,  # convert "string image" to "binary image"
     "SERVE_INCLUDE_SCHEMA": False,
+}
+
+# Redis
+REDIS_HOST = env.str("REDIS_HOST", default="localhost")
+REDIS_PORT = env.int("REDIS_PORT", default=6379)
+REDIS_DB = env.int("REDIS_DB", default=0)
+CACHE_EXPIRATION_SECONDS = env.int("CACHE_EXPIRATION_SECONDS", default=60*60)
+
+# Huey
+HUEY = {
+    "huey_class": "huey.RedisHuey",
+    "name": env.str("POSTGRES_DB", default="ray_app"),
+    "results": True,
+    "immediate": env.bool("HUEY_IMMEDIATE", default=False),
+    "connection": {
+        "host": REDIS_HOST,
+        "port": REDIS_PORT,
+        "db": REDIS_DB,
+        "connection_pool": None,
+        "read_timeout": 1,
+        "url": None,
+    },
+    "consumer": {
+        "workers": 1,
+        "worker_type": "thread",
+        "initial_delay": 0.1,
+        "backoff": 1.15,
+        "max_delay": 10.0,
+        "scheduler_interval": 1,
+        "periodic": True,
+        "check_worker_health": True,
+        "health_check_interval": 1,
+    },
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
 }

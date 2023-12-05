@@ -3,6 +3,7 @@ from rest_framework.test import APIClient
 
 pytest_plugins = [
     "users.tests.fixtures",
+    "bookmarks.tests.fixtures",
 ]
 
 

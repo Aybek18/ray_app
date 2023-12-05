@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import AuthenticationFailed
 
-from app.users.models import User
+from users.models import User
 
 
 class UserAuthService:

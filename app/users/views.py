@@ -5,8 +5,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from app.users.serializers import UserLoginSerializer, UserProfileSerializer, UserRegistrationSerializer
-from app.users.services import UserAuthService
+from users.serializers import UserLoginSerializer, UserProfileSerializer, UserRegistrationSerializer
+from users.services import UserAuthService
 
 
 class UserRegistrationAPIView(CreateAPIView):

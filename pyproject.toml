@@ -17,6 +17,10 @@ pytest = "^7.4.3"
 factory-boy = "^3.3.0"
 pytest-cov = "^4.1.0"
 pytest-django = "^4.7.0"
+requests = "^2.31.0"
+beautifulsoup4 = "^4.12.2"
+huey = "^2.5.0"
+django-redis = "^5.4.0"
 
 
 [build-system]
